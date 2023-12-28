@@ -34,7 +34,7 @@ Please visit following links to download datasets:
 
 * [IOCfish5k](https://github.com/GuoleiSun/Indiscernible-Object-Counting)
   
-In fact, we use CARPK by importing hub package. Please click [here](https://datasets.activeloop.ai/docs/ml/datasets/carpk-dataset/) for more information.
+In fact, we use CARPK and PUCPR+ by importing hub package. Please click [here](https://datasets.activeloop.ai/docs/ml/datasets/carpk-dataset/) for more information.
 ```
 /
 ├─VLCounter/
