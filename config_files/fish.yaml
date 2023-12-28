@@ -1,0 +1,28 @@
+DATA:
+  train_name: FSC
+  test_name: default
+  data_root: /workspace/IOCfish5k
+  workers: 10
+  img_size: 384
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  augmentations: [] #['hor_flip', 'vert_flip', 'resize']
+
+TRAIN:
+  manual_seed: 42
+  ckpt_path: checkpoints/
+  batch_size: 16
+  epochs: 300
+  log_freq : 300
+  save_models: True
+  lr: 1.0e-4
+  weight_decay: 1.0e-2
+MODEL:
+  pretrain: /workspace/CountVL/pretrain/
+  model_dir: model_ckpt
+
+EVALUATION:
+  ckpt_used: best
+
+DISTRIBUTED:
+  gpus: [0]
