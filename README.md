@@ -33,6 +33,27 @@ Please visit following links to download datasets:
 * [PUCPR+](https://lafi.github.io/LPN/)
 
 * [IOCfish5k](https://github.com/GuoleiSun/Indiscernible-Object-Counting)
+  
+In fact, we use CARPK by importing hub package. Please click [here](https://datasets.activeloop.ai/docs/ml/datasets/carpk-dataset/) for more information.
+```
+/
+├─VLCounter/
+│
+├─FSC147/    
+│  ├─gt/
+│  ├─image/
+│  ├─ImageClasses_FSC147.txt
+│  ├─Train_Test_Val_FSC_147.json
+│  ├─annotation_FSC147_384.json
+│  
+├─IOCfish5k/
+│  ├─annotations/
+│  ├─images/
+│  ├─test_id.txt/
+│  ├─train_id.txt/
+│  ├─val_id.txt/
+```
+
 
 ### 2. Download required python packages:
 
