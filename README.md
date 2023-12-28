@@ -62,6 +62,7 @@ The following packages are suitable for NVIDIA GeForce RTX A6000.
 ```
 pip install torch==1.10.0+cu111 torchvision==0.11.0+cu111 torchaudio==0.10.0 -f https://download.pytorch.org/whl/torch_stable.html
 pip install -r requirements.txt
+pip install hub
 ```
 
 If you want to use docker environment, please download the docker image through the command below
