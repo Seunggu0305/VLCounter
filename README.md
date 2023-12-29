@@ -1,5 +1,5 @@
 # VLCounter: Text-aware Visual Representation for Zero-Shot Object Counting
-## [Paper (ArXiv)]()
+## [Paper (ArXiv)](https://arxiv.org/abs/2312.16580)
 
 
 ![teaser](asset/main.png)
@@ -11,7 +11,7 @@ Official Implementation for AAAI 2024 paper VLCounter: Text-aware Visual Represe
 
 🔥🔥🔥 [Dec 9] Our paper is accepted by AAAI 2024.
 
-🔥🔥🔥 [Dec 28] Code and pretrained model is released.
+🔥🔥🔥 [Dec 28] Code and pretrained model are released.
 
 ## Contents
 * [Preparation](#preparation)
@@ -24,7 +24,7 @@ Official Implementation for AAAI 2024 paper VLCounter: Text-aware Visual Represe
 ## Preparation
 ### 1. Download datasets
 In our project, the following datasets are used.
-Please visit following links to download datasets:
+Please visit the following links to download datasets:
 
 * [FSC147](https://github.com/cvlab-stonybrook/LearningToCountEverything)
 
@@ -34,7 +34,7 @@ Please visit following links to download datasets:
 
 * [IOCfish5k](https://github.com/GuoleiSun/Indiscernible-Object-Counting)
   
-In fact, we use CARPK and PUCPR+ by importing hub package. Please click [here](https://datasets.activeloop.ai/docs/ml/datasets/carpk-dataset/) for more information.
+We use CARPK and PUCPR+ by importing the hub package. Please click [here](https://datasets.activeloop.ai/docs/ml/datasets/carpk-dataset/) for more information.
 ```
 /
 ├─VLCounter/
@@ -55,7 +55,7 @@ In fact, we use CARPK and PUCPR+ by importing hub package. Please click [here](h
 ```
 
 
-### 2. Download required python packages:
+### 2. Download required Python packages:
 
 The following packages are suitable for NVIDIA GeForce RTX A6000.
 
@@ -65,7 +65,7 @@ pip install -r requirements.txt
 pip install hub
 ```
 
-If you want to use docker environment, please download the docker image through the command below
+If you want to use the docker environment, please download the docker image through the command below
 ```
 docker pull sgkang0305/vlcounter
 ```
@@ -80,14 +80,14 @@ Please download the [BPE file](https://github.com/openai/CLIP/blob/main/clip/bpe
 ## Run the Code
 
 ### Train
-You can train the model using the following command. Make sure to check the options in the train.sh file.
+You can train the model using the following command. Make sure to check the options on the train.sh file.
 ```
 bash scripts/train.sh FSC {gpu_id} {exp_number}
 ```     
 
 
 ### Evaluation
-You can test the performance of trained ckpt with following command. Make sure to check the options in the test.sh file. Especially '--ckpt_used' to specify the specific weight file.
+You can test the performance of trained ckpt with the following command. Make sure to check the options in the test.sh file. Especially '--ckpt_used' to specify the specific weight file.
 ```
 bash scripts/test.sh FSC {gpu_id} {exp_number}
 ```
@@ -106,9 +106,16 @@ We provide a [pre-trained ckpt](https://drive.google.com/file/d/1-2lqtsOm9XW4MXh
 ![more](asset/qualitative_vf.png)
 
 ## Citation
-Consider cite us if you find our paper is useful in your research :).
+Consider citing us if you find our paper useful in your research :).
 ```
-
+@misc{kang2023vlcounter,
+      title={VLCounter: Text-aware VIsual Representation for Zero-Shot Object Counting}, 
+      author={Seunggu Kang and WonJun Moon and Euiyeon Kim and Jae-Pil Heo},
+      year={2023},
+      eprint={2312.16580},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 ## Acknowledgements
