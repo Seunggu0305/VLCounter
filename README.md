@@ -110,13 +110,11 @@ We provide a [pre-trained ckpt](https://drive.google.com/file/d/1-2lqtsOm9XW4MXh
 ## Citation
 Consider citing us if you find our paper useful in your research :).
 ```
-@misc{kang2023vlcounter,
-      title={VLCounter: Text-aware VIsual Representation for Zero-Shot Object Counting}, 
-      author={Seunggu Kang and WonJun Moon and Euiyeon Kim and Jae-Pil Heo},
-      year={2023},
-      eprint={2312.16580},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{kang2023vlcounter,
+  title={VLCounter: Text-aware VIsual Representation for Zero-Shot Object Counting},
+  author={Kang, Seunggu and Moon, WonJun and Kim, Euiyeon and Heo, Jae-Pil},
+  journal={arXiv preprint arXiv:2312.16580},
+  year={2023}
 }
 ```
 
