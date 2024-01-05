@@ -1,4 +1,6 @@
 # VLCounter: Text-aware Visual Representation for Zero-Shot Object Counting
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vlcounter-text-aware-visual-representation/zero-shot-counting-on-fsc147)](https://paperswithcode.com/sota/zero-shot-counting-on-fsc147?p=vlcounter-text-aware-visual-representation)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vlcounter-text-aware-visual-representation/object-counting-on-carpk)](https://paperswithcode.com/sota/object-counting-on-carpk?p=vlcounter-text-aware-visual-representation)
 ## [Paper (ArXiv)](https://arxiv.org/abs/2312.16580)
 
 
