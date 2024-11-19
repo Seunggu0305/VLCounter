@@ -9,7 +9,7 @@ import yaml
 from dotmap import DotMap
 import torch.backends.cudnn as cudnn
 from torch.utils.tensorboard import SummaryWriter
-from .models.VLCounter import Counter 
+from .models.VLCounter import Counter
 from .dataset.datasets import get_val_loader
 from .util import save_density_map, get_model_dir
 
@@ -37,7 +37,7 @@ def parse_args() -> None:
     args.prompt = parsed.prompt
     args.EVALUATION.ckpt_used = parsed.ckpt_used
     args.exp = parsed.exp
-    
+
     return args
 
 
@@ -50,7 +50,7 @@ def main(args):
         torch.manual_seed(args.TRAIN.manual_seed)
         torch.cuda.manual_seed_all(args.TRAIN.manual_seed)
         random.seed(args.TRAIN.manual_seed)
-    
+
     model = Counter(args).cuda()
     root_model = get_model_dir(args)
 
@@ -63,7 +63,7 @@ def main(args):
         print("=> loaded model weight '{}'".format(filepath),flush=True)
     else:
         print("=> Not loading anything",flush=True)
-    
+
     test_loader = get_val_loader(args,mode='test')
     # ====== Test  ======
     val_mae,val_rmse =validate_model(
@@ -134,20 +134,20 @@ def validate_model(
                             break
                         else:
                             start = w - 384
-            
+
             density_map /= 60.
             pred_cnt = torch.sum(density_map).item()
             gt_cnt = torch.sum(query_den).item()
             cnt_err = abs(pred_cnt-gt_cnt)
             qry_mae += cnt_err
             qry_rmse += cnt_err**2
-            
+
 
             # visualize_path = model_save_dir + "/visualize_test_count"
             # os.makedirs(visualize_path,exist_ok=True)
             # save_density_map(query_img[0],density_map,attn_map,query_den[0],visualize_path,str(epoch)+'_'+class_chosen[0]+'_'+str(i),class_chosen=class_chosen[0])
             # already_print_class.append(class_chosen[0])
-            
+
         qry_mae = qry_mae / len(val_loader.dataset)
         qry_rmse = (qry_rmse/len(val_loader.dataset)) ** 0.5
 

@@ -8,10 +8,8 @@ import random
 import yaml
 from dotmap import DotMap
 import torch.backends.cudnn as cudnn
-import torch.nn.functional as F
 from torch.utils.tensorboard import SummaryWriter
-# from .models.Counter_vit_af_tc_info_unet_v4 import Counter 
-from .models.Counter_vit_tc_unet_info import Counter 
+from .models.VLCounter import Counter
 from .util import save_density_map_carpk, get_model_dir, get_model_dir_pucpr
 
 def parse_args() -> None:
@@ -35,15 +33,10 @@ def parse_args() -> None:
     args.EVALUATION.ckpt_used = parsed.ckpt_used
     args.exp = parsed.exp
 
-    if args.enc == 'res101':
-        args.MODEL.pretrain = '/workspace/YESCUTMIX/pretrain/RN101.pt'
-    
     return args
 
 
 def main(args):
-    local_rank = args.local_rank
-
     if args.TRAIN.manual_seed is not None:
         cudnn.benchmark = False
         cudnn.deterministic = True
@@ -52,7 +45,7 @@ def main(args):
         torch.manual_seed(args.TRAIN.manual_seed)
         torch.cuda.manual_seed_all(args.TRAIN.manual_seed)
         random.seed(args.TRAIN.manual_seed)
-    
+
     model = Counter(args).cuda()
     root_model = get_model_dir(args)
 
@@ -65,14 +58,11 @@ def main(args):
         print("=> loaded model weight '{}'".format(filepath),flush=True)
     else:
         print("=> Not loading anything",flush=True)
-    
-    # test_loader = get_val_loader(args,mode='test')
-    
+
     import hub
     ds_test = hub.load("hub://activeloop/pucpr-test")
-    #dataloader_train = ds_train.pytorch(num_workers=args.num_workers, batch_size=1, shuffle=False)
     test_loader = ds_test.pytorch(num_workers=args.DATA.workers, batch_size=1, shuffle=False)
-    
+
     root_model = get_model_dir_pucpr(args)
 
     # ====== Test  ======
@@ -135,7 +125,7 @@ def validate_model(
             query_img = transforms.Resize((384, 683))(query_img[0]).unsqueeze(0)
             # query_img = img_trans(query_img).unsqueeze(0)
             t0= time.time()
-            
+
             density_map = torch.zeros([384,683])
             density_map = density_map.cuda()
             attn_map = torch.zeros([384,683])
@@ -144,10 +134,7 @@ def validate_model(
             start = 0
             prev = -1
             while start + 383 < 683:
-                # start_t = time.time()
                 output, attn, _ = model(query_img[:,:,:,start:start+384], tokenized_text, None)
-                # print(time.time() - start_t)
-                # exit()
                 output = output.squeeze(0).squeeze(0)
                 attn = attn.squeeze()
                 b1 = nn.ZeroPad2d(padding=(start, 683 - prev - 1, 0, 0))
@@ -165,8 +152,8 @@ def validate_model(
                 b4 = nn.ZeroPad2d(padding=(prev + 1, 0, 0, 0))
                 density_map_r = b4(density_map[:, prev + 1:683])
                 attn_map_r = b4(attn_map[:, prev + 1:683])
-                
-                
+
+
                 density_map = density_map_l + density_map_r + density_map_m / 2 + d1 / 2 + d2
                 attn_map = attn_map_l + attn_map_r + attn_map_m / 2 + a1 / 2 + a2
 
@@ -175,9 +162,8 @@ def validate_model(
                 if start+383 >= 683:
                     if start == 683 - 384 + 128: break
                     else: start = 683 - 384
-        
+
             conv = nn.Conv2d(1,1,kernel_size=(16,16),stride=16,bias=False)
-            #print(conv.weight.shape)
             conv.weight.data = torch.ones([1,1,16,16]).cuda()
 
             density_map = density_map.unsqueeze(0)
@@ -188,16 +174,16 @@ def validate_model(
                 for j in range(d_m.shape[3]):
                     if d_m[0][0][i][j] > 1.224:
                         pred_cnt -=1
-            
+
             gt_cnt = labels.shape[1]
             cnt_err = abs(pred_cnt-gt_cnt)
             qry_mae += cnt_err
             qry_rmse += cnt_err**2
-        
+
             # visualize_path = model_save_dir + "/visualize_test_pucpr"
             # os.makedirs(visualize_path,exist_ok=True)
             # save_density_map_carpk(query_img[0],density_map,attn_map,cnt_err,visualize_path,str(idx)+'_cars',class_chosen="cars")
-            
+
         qry_mae = qry_mae / len(val_loader.dataset)
         qry_rmse = (qry_rmse/len(val_loader.dataset)) ** 0.5
 
